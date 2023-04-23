@@ -1,0 +1,14 @@
+version: '3'
+services:
+  crypto-service-db:
+    image: "postgres:14"
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=crypto_shipping
+      - POSTGRES_PASSWORD=crypto_shipping
+      - POSTGRES_DB=crypto_shipping
+    volumes:
+      - cs-data:/var/lib/postgresql/data/
+volumes:
+  cs-data:

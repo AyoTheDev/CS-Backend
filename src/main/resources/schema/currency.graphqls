@@ -1,0 +1,22 @@
+
+extend type Query {
+    currency: [CurrencyResponse]
+}
+
+type CurrencyResponse {
+    id:Long
+    code:String
+    name:String
+    enable:Boolean
+    walletRegex:String
+    priority:String
+    extraIdExists:String
+    extraIdRegex:String
+    logoUrl:String
+    track:Boolean
+    cgId:String
+    isMaxlimit:Boolean
+    network:String
+    smartContract:String
+    networkPrecision:String
+}

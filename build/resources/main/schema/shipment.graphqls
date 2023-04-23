@@ -1,0 +1,103 @@
+extend type Mutation {
+    initShipment(request: ShipmentRequest): ShipmentResponse
+    importFromCsv(file: Upload!): [ShipmentResponse]!
+}
+
+type ShipmentResponse {
+    id: String,
+    from: String,
+    to: String,
+    rateList: [RateResponse]
+    messages: [Message]
+}
+
+type PostageLabelResponse {
+    id: String,
+#   The date that appears on the postage label
+    labelDate: String,
+#    The URL of the EPL2 label file
+    labelEpl2Url: String,
+#    File type of the label
+    labelFileType: String,
+#    The URL of the PDF label file
+    labelPdfUrl: String,
+#    The resolution of the label
+    labelResolution: Int,
+#    The size of the label
+    labelSize: String,
+#    The type of the label
+    labelType: String,
+#    The URL of the label file
+    labelUrl: String,
+#    The URL of the ZPL label file
+    labelZplUrl: String
+}
+
+type Message {
+    # the name of the carrier generating the error, e.g. "UPS"
+    carrier: String
+    # the category of error that occurred. Most frequently "rate_error"
+    type: String
+    # the String from the carrier explaining the problem
+    message: String
+    # the account id of the carrier. Useful if you have multiple accounts with the same carrier
+    carrier_account_id: String
+}
+
+type RateResponse {
+    id: String
+    object: String
+    billing_type: String
+    carrier_account_id: String
+    service: String
+    rate: Float
+    carrier: String
+    currency: String
+    description: String
+    shipment_id: String
+    delivery_days: Int
+    delivery_date: String
+    delivery_date_guaranteed: Boolean
+    postageLabel: PostageLabelResponse
+    status: String
+}
+
+input ShipmentRequest {
+    parcel: ParcelRequest,
+    fromAddress: AddressRequest,
+    toAddress: AddressRequest,
+    signatureType: SignatureType
+}
+
+input AddressRequest {
+    name: String,
+    addressLine1: String,
+    addressLine2: String,
+    city: String,
+    postcode: String,
+    country: String,
+    phone: String,
+    state: String
+}
+
+enum MeasurementType {
+    metric, imperial
+}
+
+input ParcelRequest {
+    measurementType: MeasurementType,
+#length	float (inches)	Required if width and/or height are present
+    length: Float,
+#width	float (inches)	Required if length and/or height are present
+    width: Float,
+#height	float (inches)	Required if length and/or width are present
+    height: Float,
+#weight	float (oz)	Always required
+    weight: Float
+}
+
+enum SignatureType {
+    NO_SIGNATURE,SIGNATURE,ADULT_SIGNATURE
+}
+
+

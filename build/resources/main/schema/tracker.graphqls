@@ -1,0 +1,42 @@
+extend type RateResponse {
+    tracker: TrackerResponse
+}
+
+extend type Query {
+    getTracker(request: TrackerGetRequest!): TrackerResponse
+}
+
+type TrackerResponse {
+    id: String
+    trackingCode: String
+    status: String
+    signedBy: String
+    weight: Float
+    estDeliveryDate: String
+    shipmentId: String
+    carrier: String
+    trackingDetails: [TrackingDetailResponse]
+    publicUrl: String
+    fees: String
+    createdAt: String
+    updatedAt: String
+}
+
+type TrackingDetailResponse {
+    message: String
+    status: String
+    datetime: String
+    source: String
+    trackingLocation: TrackingLocation
+}
+
+type TrackingLocation {
+    city: String
+    state: String
+    country: String
+    zip: String
+}
+
+input TrackerGetRequest {
+    code: String!
+}

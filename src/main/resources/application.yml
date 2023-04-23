@@ -1,0 +1,91 @@
+spring:
+  application:
+    name: crypto-shipping-service
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:crypto_shipping}
+    username: ${DB_USER:crypto_shipping}
+    password: ${DB_PASS:crypto_shipping}
+    driver-class-name: org.postgresql.Driver
+  flyway:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:crypto_shipping}
+    user: ${DB_MIGRATION_USER:crypto_shipping}
+    password: ${DB_MIGRATION_PASS:crypto_shipping}
+    enabled: ${FLYWAY_ENABLED:false}
+    baseline-on-migrate: ${FLYWAY_BASE_LINE:true}
+    validate-on-migrate: ${FLYWAY_VALIDATE:true}
+    out-of-order: ${FLYWAY_OUT_OF_ORDER:false}
+    placeholders:
+      application_user: ${DB_USER:payment-processor}
+  jpa:
+    show-sql: ${JPA_SHOW_SQL:false}
+    properties:
+      hibernate.dialect: ${HIBERNATE_DIALECT:org.hibernate.dialect.PostgreSQL10Dialect}
+    hibernate:
+      ddl-auto: update
+  rabbitmq:
+    username: ${RABBITMQ_USER:guest}
+    password: ${RABBITMQ_PASS:guest}
+    addresses: ${RABBITMQ_HOSTS:localhost:5672}
+    queueName: ${RABBIT_CALLBACK_QUEUE:callbackQueueName}
+    listener:
+      simple:
+        retry:
+          enabled: true
+          initial-interval: 3s
+          max-attempts: 3
+          max-interval: 10s
+          multiplier: 2
+  mail:
+    host: ${EMAIL_SMTP_HOST:host.docker.internal}
+    port: ${EMAIL_SMTP_PORT:1025}
+    username: ${EMAIL_SMTP_USERNAME:support@cryptopost.global}
+    password: ${EMAIL_SMTP_PASSWORD:sG_J81A1nPku4woZM7PaPg}
+    smtp:
+      auth: true
+      connectiontimeout: 5000
+      timeout: 5000
+      writetimeout: 5000
+      starttls:
+        enable: true
+feign:
+  client:
+    cms:
+      url: ${CMS_URL:https://cms.cryptopost.global/api}
+      token: ${CMS_TOKEN:b21aac04a5d4ee3ef1b217fe9aeef165626123b9fd98980fc0eb00b2aef66f32315a088628116f2adec9bd9b39b2dcad900572561315a1cd50e171cd45813c4d9e6a050c910d34ec5ef0223fadf19eacd0edf8d4800f5c0b9183941d8fb02c0e0f9c302a6bf86ca122157a4f329d07dac940009c707246b09f63c94a6cfc7b06}
+    easypost:
+      #"test" or "production"
+      mode: ${EASYPOST_SERVICE_MODE:test}
+      url: ${EASYPOST_SERVICE_URL:https://api.easypost.com/v2}
+      apiToken: ${EASYPOST_API_TOKEN:EZTKed8b11adc4134ebeaca00292ce4344d7a7RM93LdMQHY6KVsUU6Cfg}
+      tokenLifeTime: 3m
+    nowpayments:
+      url: ${NOWPAYMENTS_SERVICE_URL:https://api.nowpayments.io/v1}
+      apiToken: ${NOWPAYMENTS_X_API_TOKEN:23TNERY-2FD40AP-JT2S9N6-G4J5DE9}
+      ipnSecret: ${NOWPAYMENTS_X_IPN_SECRET:8QwdZ1oNIwZfgWp/kJyKPcntXKUqR//Z}
+      tokenLifetime: 3m
+      email: ${NOWPAYMENTS_EMAIL:ayo@scienta.co}
+      password: ${NOWPAYMENTS_PASS:Thisisforayo765!!}
+settings:
+  defaultCurrency: ${DEFAULT_CURRENCY:GBP}
+  payoutCallbackUrl: ${PAYOUT_CALLBACK_URL:https://api.cryptopost.global/payout/callback}
+  replenishmentCallbackUrl: ${PAYOUT_CALLBACK_URL:https://api.cryptopost.global/replenishment/callback}
+  default-language: ${DEFAULT_LANGUAGE:en}
+
+server:
+  error.include-message: always
+  port: ${SERVER_PORT:8080}
+
+management:
+  server:
+    port: ${MANAGEMENT_PORT:8008}
+    ssl.enabled: false
+  endpoints.web.exposure.include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      probes.enabled: true
+      show-details: always
+    metrics.enabled: true
+  health:
+    defaults.enabled: false

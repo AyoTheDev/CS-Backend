@@ -1,0 +1,40 @@
+image: gradle:7.3.3
+pipelines:
+  default:
+    - step:
+          name: Build and Test
+          caches:
+            - gradle
+          script:
+            - gradle build
+  branches:
+    dev:
+      - step:
+          name: Build and Test
+          caches:
+            - gradle
+          script:
+            - gradle build
+
+      - step:
+          name: Deploy to production
+          deployment: production
+          script:
+            - echo "Deploying to dev environment"
+            - ls
+            - pipe: atlassian/ssh-run:0.4.1
+              variables:
+                SSH_USER: 'root'
+                SERVER: '95.217.133.17'
+                MODE: 'script'
+                COMMAND: './scripts/deploy-dev.sh'
+                ENV_VARS: >-
+                  DB_HOST=${PROD_DB_HOST}
+                  DB_NAME=${PROD_DB_NAME}
+                  DB_USER=${PROD_DB_USER}
+                  DB_PASS=${PROD_DB_PASS}
+                  DB_PORT=${PROD_DB_PORT}
+                  EASYPOST_SERVICE_MODE=${PROD_EASYPOST_SERVICE_MODE}
+                  EASYPOST_API_TOKEN=${PROD_EASYPOST_API_TOKEN}
+                  NOWPAYMENTS_X_IPN_SECRET=${PROD_NOWPAYMENTS_X_IPN_SECRET}
+                  NOWPAYMENTS_X_API_TOKEN=${PROD_NOWPAYMENTS_X_API_TOKEN}

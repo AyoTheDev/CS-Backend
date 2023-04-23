@@ -1,0 +1,52 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+
+group 'com.scienta.cs.notification'
+sourceCompatibility = '17'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url "https://plugins.gradle.org/m2/" }
+    gradlePluginPortal()
+}
+
+dependencies {
+
+
+    implementation 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: '3.1.0'
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.6.3'
+    implementation 'org.springframework.boot:spring-boot-starter-cache:2.6.3'
+    implementation 'org.springframework.boot:spring-boot-starter-mail:2.6.3'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:3.1.0'
+    implementation 'io.springfox:springfox-swagger2:3.0.0'
+    implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+    implementation 'org.springframework.boot:spring-boot-starter-validation:2.6.3'
+    implementation 'org.springframework.boot:spring-boot-starter-amqp:2.7.1'
+    implementation 'javax.mail:mail:1.5.0-b01'
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
+}
+
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            url "${System.env.CI_REGISTRY}/repository/maven-snapshots/"
+            credentials {
+                username "${System.env.CI_REGISTRY_USER}"
+                password "${System.env.CI_REGISTRY_PASSWORD}"
+            }
+        }
+    }
+}
+

@@ -1,0 +1,49 @@
+scalar Long
+scalar Upload
+
+type Mutation {
+    initOrder(request:OrderRequest): OrderResponse
+    completeOrder(request:OrderCompleteRequest): OrderCompleteResponse
+    sendLabelsToEmail(request:OrderEmailRequest): Boolean
+}
+
+type Query {
+    getOrder(request: OrderGetRequest): OrderGetResponse
+}
+
+input OrderGetRequest {
+    orderId: String!
+}
+
+type OrderGetResponse {
+    rateList: [RateResponse]
+    status: String
+    transactionId: String
+    orderId:String
+}
+
+type OrderCompleteResponse {
+    invoice_url: String!
+}
+
+input OrderCompleteRequest {
+    orderId:String!
+}
+
+input OrderEmailRequest {
+    orderId:String!
+    email:String!
+}
+
+type OrderResponse {
+    id: String!
+}
+
+input OrderRequest {
+   orderList: [OrderRequestInfo]!
+}
+
+input OrderRequestInfo {
+    rateId: String
+    shipmentId: String
+}

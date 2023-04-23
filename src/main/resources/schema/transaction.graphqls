@@ -1,0 +1,21 @@
+extend type Query {
+    history(request: TransactionRequest): [PaymentHistory]
+}
+
+input TransactionRequest {
+    userUuid: String!
+    fromDate: String!
+    toDate: String!
+    size: Long!
+    page: Long!
+}
+
+type PaymentHistory {
+    id: Long!
+    amount: Float
+    currency: String
+    provider: String
+    transaction_type: String
+    created_at: String
+    status: String
+}

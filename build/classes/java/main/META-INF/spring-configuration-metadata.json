@@ -1,0 +1,18 @@
+{
+  "groups": [
+    {
+      "name": "settings",
+      "type": "com.scienta.cs.core.models.AppSettings",
+      "sourceType": "com.scienta.cs.core.configs.Beans",
+      "sourceMethod": "appSettings()"
+    }
+  ],
+  "properties": [
+    {
+      "name": "settings.default-language",
+      "type": "java.lang.String",
+      "sourceType": "com.scienta.cs.core.models.AppSettings"
+    }
+  ],
+  "hints": []
+}

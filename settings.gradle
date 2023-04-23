@@ -1,0 +1,4 @@
+rootProject.name = 'crypto-shipping-service'
+include 'nowpayments'
+include 'easypost'
+include 'notification'

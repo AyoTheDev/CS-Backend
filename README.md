@@ -1,3 +1,24 @@
+# [Crypto Post](https://cryptopost.global/main)
+
+This repository contains the back-end for the Crypto Post web application, which allows users to buy postage labels using cryptocurrency. The front-end for the project is hosted on a private Bitbucket server and is written in AngularJS.
+
+## Features
+
+- Generate postage labels using the Easypost API
+- Accept cryptocurrency payments using NowPayments
+- Use Strapi CMS for input fields and blog posts, making it easier to update the website without the need for a release
+- Utilize GraphQL for API calls
+
+## Requirements
+
+- Java 17 or later
+- Spring Boot
+- Strapi CMS
+- Easypost API Key
+- NowPayments API Key
+
+## Getting Started
+
 * Have docker installed on your system (should be bundled with docker compose) the best way to do this is get it directly from the docker website
 * Download the following `docker-compose.yml` file:
 
@@ -22,3 +43,6 @@ services:
 * Finally, on the right hand side of the IDE click Gradle -> Tasks -> dgs graphql codegen and run generateJava
 
 Project should now run!
+
+This project is licensed under the [MIT License](LICENSE).
+

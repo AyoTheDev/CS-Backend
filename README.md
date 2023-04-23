@@ -11,7 +11,7 @@ This repository contains the back-end for the Crypto Post web application, which
 
 ## Requirements
 
-- Java 17 or later
+- Java 18 or later
 - Spring Boot
 - Strapi CMS
 - Easypost API Key
